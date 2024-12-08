@@ -31,13 +31,13 @@
             color: white;
             font-weight: bold;
             font-size: 1.2em;
+            border: 2px solid transparent; /* Default border color */
         }
         .message-content {
             flex: 1;
         }
         .username {
             font-weight: bold;
-            color: #7289da;
         }
         .timestamp {
             font-size: 0.8em;
@@ -59,6 +59,24 @@
     <div id="logContainer"></div>
 
     <script>
+        const userColors = {};
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function getUserColor(username) {
+            if (!userColors[username]) {
+                userColors[username] = getRandomColor();
+            }
+            return userColors[username];
+        }
+
         document.getElementById('fileInput').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -76,7 +94,6 @@
         });
 
         function displayMessages(data) {
-            // Sort messages by timestamp
             data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
             const logContainer = document.getElementById('logContainer');
@@ -88,6 +105,8 @@
 
                 const profilePic = document.createElement('div');
                 profilePic.className = 'profile-pic';
+                profilePic.style.borderColor = getUserColor(message.author.username);
+
                 if (message.author.avatarURL) {
                     const img = document.createElement('img');
                     img.src = message.author.avatarURL;
@@ -104,6 +123,7 @@
 
                 const usernameSpan = document.createElement('span');
                 usernameSpan.className = 'username';
+                usernameSpan.style.color = getUserColor(message.author.username);
                 usernameSpan.textContent = `${message.author.username}#${message.author.discriminator}`;
 
                 const timestampSpan = document.createElement('span');
