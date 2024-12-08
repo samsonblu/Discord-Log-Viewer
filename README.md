@@ -7,10 +7,9 @@
 
 
 2. Locate the 50.json file. 
-[Screenshot 2024-12-07 210741](https://github.com/user-attachments/assets/6e70e12c-f0ea-4c29-996c-e0777a12295a)
+![Screenshot 2024-12-07 210741](https://github.com/user-attachments/assets/6e70e12c-f0ea-4c29-996c-e0777a12295a)
 
-
-3. Download dicord_vis.html
+3. Download and open dicord_vis.html in a web viewer.
 
 4. Injest the 50.json file into Discord Log Viewer.
 
