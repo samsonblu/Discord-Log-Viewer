@@ -10,7 +10,7 @@
 
 3. Save the 50.json.
 
-4. Download and open dicord_vis.html in a web viewer.
+4. Download and open discord_vis.html in a web viewer.
 
 5. Injest the 50.json file into Discord Log Viewer.
 
