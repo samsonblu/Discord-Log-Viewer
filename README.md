@@ -6,9 +6,11 @@
 1. Open the Cache folder in CacheChromeViewer.
 
 
-2. Locate the 50.json file.
+2. Locate the 50.json files.
 
 ![Screenshot 2024-12-07 210741](https://github.com/user-attachments/assets/6e70e12c-f0ea-4c29-996c-e0777a12295a)
+
+3. Save the 50.json.
 
 4. Download and open dicord_vis.html in a web viewer.
 
