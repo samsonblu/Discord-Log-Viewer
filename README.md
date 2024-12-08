@@ -4,7 +4,7 @@
 
 **This requires CacheChromeViewer with a found 50.json**
 
-1. Open the C:\Users\<username>\AppData\Roaming\Discord\Cache folder in CacheChromeViewer.
+1. Open the C:\Users\$username\AppData\Roaming\Discord\Cache folder in CacheChromeViewer.
 
 2. Locate the 50.json files.
 
