@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Log Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            padding: 20px;
+        }
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #2f3136;
+        }
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #7289da;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .message-content {
+            flex: 1;
+        }
+        .username {
+            font-weight: bold;
+            color: #7289da;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: #72767d;
+        }
+        .attachment {
+            margin-top: 5px;
+            color: #99aab5;
+        }
+        .attachment img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Discord Log Viewer</h1>
+    <input type="file" id="fileInput" accept=".json">
+    <div id="logContainer"></div>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        displayMessages(data);
+                    } catch (error) {
+                        console.error("Error parsing JSON:", error);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function displayMessages(data) {
+            // Sort messages by timestamp
+            data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+            const logContainer = document.getElementById('logContainer');
+            logContainer.innerHTML = '';
+
+            data.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+
+                const profilePic = document.createElement('div');
+                profilePic.className = 'profile-pic';
+                if (message.author.avatarURL) {
+                    const img = document.createElement('img');
+                    img.src = message.author.avatarURL;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.borderRadius = '50%';
+                    profilePic.appendChild(img);
+                } else {
+                    profilePic.textContent = message.author.username.charAt(0).toUpperCase();
+                }
+
+                const messageContentDiv = document.createElement('div');
+                messageContentDiv.className = 'message-content';
+
+                const usernameSpan = document.createElement('span');
+                usernameSpan.className = 'username';
+                usernameSpan.textContent = `${message.author.username}#${message.author.discriminator}`;
+
+                const timestampSpan = document.createElement('span');
+                timestampSpan.className = 'timestamp';
+                timestampSpan.textContent = ` [${new Date(message.timestamp).toLocaleString()}]`;
+
+                const contentDiv = document.createElement('div');
+                contentDiv.textContent = message.content;
+
+                messageContentDiv.appendChild(usernameSpan);
+                messageContentDiv.appendChild(timestampSpan);
+                messageContentDiv.appendChild(contentDiv);
+
+                if (message.attachments && message.attachments.length > 0) {
+                    message.attachments.forEach(attachment => {
+                        const attachmentDiv = document.createElement('div');
+                        attachmentDiv.className = 'attachment';
+                        const img = document.createElement('img');
+                        img.src = attachment.url;
+                        img.onerror = function() {
+                            attachmentDiv.textContent = `Image not found: ${attachment.url}`;
+                        };
+                        img.onload = function() {
+                            attachmentDiv.appendChild(img);
+                        };
+                        messageContentDiv.appendChild(attachmentDiv);
+                    });
+                }
+
+                messageDiv.appendChild(profilePic);
+                messageDiv.appendChild(messageContentDiv);
+                logContainer.appendChild(messageDiv);
+            });
+        }
+    </script>
+</body>
+</html>
