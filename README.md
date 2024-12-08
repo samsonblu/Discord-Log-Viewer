@@ -18,6 +18,4 @@ Enjoy the tool! :D
 
 ## Tool Preview. ##
 
-![Screenshot 2024-12-07 210000](https://github.com/user-attachments/assets/1758a87a-9e9c-4db1-87c4-360fd87e8e71)
-
 ![Screenshot 2024-12-07 214139](https://github.com/user-attachments/assets/55dc6fdd-2374-4d04-94ec-eb88db8bdecc)
